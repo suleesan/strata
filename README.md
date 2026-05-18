@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Litmap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Litmap turns research papers into interactive concept graphs. Paste an arXiv link or upload a PDF to explore the paper as a map of claims, evidence, methods, results, and limitations — and how they relate. Click any node to read the underlying text and ask questions about it.
 
-Currently, two official plugins are available:
+Unlike citation graphs, Litmap maps the paper’s argument structure: what it claims, what supports it, and what depends on what.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Requirements
 
-## React Compiler
+- Node.js 18+
+- [Anthropic API key](https://console.anthropic.com/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Setup
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create `.env.local` in the project root:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
 ```
+
+## Run locally
+
+Start the frontend and API together:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173). The API runs on port 3001; Vite proxies `/api` requests in development.
+
+To run services separately:
+
+```bash
+npm run dev:frontend   # http://localhost:5173
+npm run dev:backend    # http://localhost:3001
+```
+
+## Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Usage
+
+1. On the home page, enter an arXiv URL (e.g. `arxiv.org/abs/2301.12345`) or upload a PDF.
+2. Wait while the paper is parsed and mapped. Extraction can take a minute for longer papers.
+3. Explore the graph: zoom and pan, filter by node type, and click a node to open its details.
+4. In the side panel, ask a question about the selected node for a contextual answer.
+
+Graph data is kept in memory for the session; refreshing the page clears the current paper until you import it again.
+
+## TODO
+
+- [ ] Persist papers in `localStorage` (survive refresh)
+- [ ] Validate extraction JSON + retry on failure
+- [ ] Fallback to abstract-only when PDF text is too noisy
+- [ ] Chunk long papers for extraction, then merge graphs
+- [ ] Multi-paper overlay (agree / contradict / build-on)
+- [ ] Production deploy (serve build + API)
