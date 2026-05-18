@@ -62,3 +62,7 @@ Graph data is kept in memory for the session; refreshing the page clears the cur
 - [ ] Chunk long papers for extraction, then merge graphs
 - [ ] Multi-paper overlay (agree / contradict / build-on)
 - [ ] Production deploy (serve build + API)
+
+## Disclaimer
+
+Claude Code is being used to support this project.

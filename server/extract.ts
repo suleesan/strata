@@ -53,7 +53,6 @@ export async function extractPaper(text: string) {
   const stream = await client.messages.stream({
     model: 'claude-opus-4-6',
     max_tokens: 8096,
-    thinking: { type: 'adaptive' },
     system: EXTRACTION_SYSTEM_PROMPT,
     messages: [
       {
