@@ -13,7 +13,7 @@ import { extractPaper } from './extract.js'
 // CJS modules: use createRequire for ESM compat
 import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
-const pdfParse = require('pdf-parse')
+const pdfParse = require('pdf-parse/lib/pdf-parse.js')
 const multer = require('multer')
 
 const app = express()

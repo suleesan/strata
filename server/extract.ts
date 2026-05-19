@@ -1,7 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
 
-const client = new Anthropic()
-
 export const EXTRACTION_SYSTEM_PROMPT = `
 You are a research paper analyst. Your job is to decompose a research paper into a structured knowledge graph — not a summary, but a map of the paper's intellectual architecture.
 
@@ -47,6 +45,7 @@ Return ONLY valid JSON, no prose, no markdown fences. Schema:
 `.trim()
 
 export async function extractPaper(text: string) {
+  const client = new Anthropic()
   // Truncate to ~80k chars to stay within context limits
   const truncated = text.slice(0, 80000)
 
