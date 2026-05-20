@@ -18,7 +18,7 @@ export function Home() {
       <div className="text-center mb-10 space-y-3">
         <div className="flex items-center justify-center gap-2 text-violet-400 mb-2">
           <Network size={28} />
-          <span className="text-2xl font-semibold tracking-tight">Litmap</span>
+          <span className="text-2xl font-semibold tracking-tight">Strata</span>
         </div>
         <h1 className="text-4xl font-bold text-slate-100 tracking-tight">
           Turn papers into idea maps

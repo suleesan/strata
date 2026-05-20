@@ -1,22 +1,22 @@
-import { useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Network } from 'lucide-react'
-import { usePaperStore } from '../store/paper'
-import { Graph, type GraphHandle } from '../components/Graph'
-import { NodePanel } from '../components/NodePanel'
-import { Legend } from '../components/Legend'
-import { Toolbar } from '../components/Toolbar'
-import type { PaperNode } from '../lib/types'
+import { useRef } from "react";
+import { useParams, Link } from "react-router-dom";
+import { ArrowLeft, Network } from "lucide-react";
+import { usePaperStore } from "../store/paper";
+import { Graph, type GraphHandle } from "../components/Graph";
+import { NodePanel } from "../components/NodePanel";
+import { Legend } from "../components/Legend";
+import { Toolbar } from "../components/Toolbar";
+import type { PaperNode } from "../lib/types";
 
 export function PaperView() {
-  const { id } = useParams<{ id: string }>()
-  const graphRef = useRef<GraphHandle>(null)
+  const { id } = useParams<{ id: string }>();
+  const graphRef = useRef<GraphHandle>(null);
 
-  const paper = usePaperStore((s) => s.papers[id ?? ''])
-  const selectedNode = usePaperStore((s) => s.selectedNode)
-  const activeFilters = usePaperStore((s) => s.activeFilters)
-  const selectNode = usePaperStore((s) => s.selectNode)
-  const toggleFilter = usePaperStore((s) => s.toggleFilter)
+  const paper = usePaperStore((s) => s.papers[id ?? ""]);
+  const selectedNode = usePaperStore((s) => s.selectedNode);
+  const activeFilters = usePaperStore((s) => s.activeFilters);
+  const selectNode = usePaperStore((s) => s.selectNode);
+  const toggleFilter = usePaperStore((s) => s.toggleFilter);
 
   if (!paper) {
     return (
@@ -27,35 +27,42 @@ export function PaperView() {
           ← Back to home
         </Link>
       </div>
-    )
+    );
   }
 
-  const visibleNodes = paper.nodes.filter((n) => activeFilters.has(n.type))
-  const visibleIds = new Set(visibleNodes.map((n) => n.id))
+  const visibleNodes = paper.nodes.filter((n) => activeFilters.has(n.type));
+  const visibleIds = new Set(visibleNodes.map((n) => n.id));
   const visibleEdges = paper.edges.filter((e) => {
-    const src = typeof e.source === 'string' ? e.source : (e.source as PaperNode).id
-    const tgt = typeof e.target === 'string' ? e.target : (e.target as PaperNode).id
-    return visibleIds.has(src) && visibleIds.has(tgt)
-  })
+    const src =
+      typeof e.source === "string" ? e.source : (e.source as PaperNode).id;
+    const tgt =
+      typeof e.target === "string" ? e.target : (e.target as PaperNode).id;
+    return visibleIds.has(src) && visibleIds.has(tgt);
+  });
 
   return (
     <div className="flex flex-col h-screen bg-slate-950 overflow-hidden">
       {/* Top bar */}
       <div className="flex items-center gap-3 px-4 py-3 bg-slate-900 border-b border-slate-800 shrink-0">
-        <Link to="/" className="text-slate-500 hover:text-slate-300 transition-colors">
+        <Link
+          to="/"
+          className="text-slate-500 hover:text-slate-300 transition-colors"
+        >
           <ArrowLeft size={18} />
         </Link>
         <div className="flex items-center gap-1.5 text-violet-400">
           <Network size={16} />
-          <span className="text-sm font-semibold">Litmap</span>
+          <span className="text-sm font-semibold">Strata</span>
         </div>
         <div className="w-px h-4 bg-slate-700" />
         <div className="flex-1 min-w-0">
-          <h1 className="text-sm font-medium text-slate-200 truncate">{paper.title}</h1>
+          <h1 className="text-sm font-medium text-slate-200 truncate">
+            {paper.title}
+          </h1>
           {paper.authors.length > 0 && (
             <div className="text-xs text-slate-500 truncate">
-              {paper.authors.slice(0, 3).join(', ')}
-              {paper.authors.length > 3 ? ' et al.' : ''}
+              {paper.authors.slice(0, 3).join(", ")}
+              {paper.authors.length > 3 ? " et al." : ""}
             </div>
           )}
         </div>
@@ -101,5 +108,5 @@ export function PaperView() {
         )}
       </div>
     </div>
-  )
+  );
 }

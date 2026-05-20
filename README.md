@@ -1,8 +1,8 @@
-# Litmap
+# Strata
 
-Litmap turns research papers into interactive concept graphs. Paste an arXiv link or upload a PDF to explore the paper as a map of claims, evidence, methods, results, and limitations — and how they relate. Click any node to read the underlying text and ask questions about it.
+Strata turns research papers into interactive concept graphs. Paste an arXiv link or upload a PDF to explore the paper as a map of claims, evidence, methods, results, and limitations — and how they relate. Click any node to read the underlying text and ask questions about it.
 
-Unlike citation graphs, Litmap maps the paper’s argument structure: what it claims, what supports it, and what depends on what.
+Unlike citation graphs, Strata maps the paper’s argument structure: what it claims, what supports it, and what depends on what.
 
 ## Requirements
 
