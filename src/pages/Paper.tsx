@@ -17,6 +17,7 @@ export function PaperView() {
   const activeFilters = usePaperStore((s) => s.activeFilters);
   const selectNode = usePaperStore((s) => s.selectNode);
   const toggleFilter = usePaperStore((s) => s.toggleFilter);
+  const updateNode = usePaperStore((s) => s.updateNode);
 
   if (!paper) {
     return (
@@ -100,9 +101,11 @@ export function PaperView() {
         {selectedNode && (
           <div className="w-80 shrink-0 border-l border-slate-800 bg-slate-900 flex flex-col min-h-0">
             <NodePanel
+              key={selectedNode.id}
               node={selectedNode}
               abstract={paper.abstract}
               onClose={() => selectNode(null)}
+              onUpdate={(node) => updateNode(paper.id, node)}
             />
           </div>
         )}

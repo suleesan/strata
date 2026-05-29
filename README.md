@@ -42,8 +42,11 @@ npm run dev:backend    # http://localhost:3001
 
 ```bash
 npm run build
-npm run preview
+npm start
 ```
+
+The API server serves the Vite build from `dist/` when it exists, so production
+can run from a single process.
 
 ## Usage
 
@@ -51,18 +54,18 @@ npm run preview
 2. Wait while the paper is parsed and mapped. Extraction can take a minute for longer papers.
 3. Explore the graph: zoom and pan, filter by node type, and click a node to open its details.
 4. In the side panel, ask a question about the selected node for a contextual answer.
+5. Edit extracted nodes when the model output needs cleanup.
 
-Graph data is kept in memory for the session; refreshing the page clears the current paper until you import it again.
+Imported papers are saved in `localStorage`, so they survive refreshes in the
+same browser.
 
 ## TODO
 
-- [ ] Persist papers in `localStorage` (survive refresh)
-- [ ] Validate extraction JSON + retry on failure
-- [ ] Fallback to abstract-only when PDF text is too noisy
-- [ ] Chunk long papers for extraction, then merge graphs
 - [ ] Multi-paper overlay (agree / contradict / build-on)
-- [ ] Production deploy (serve build + API)
-- [ ] Edit UI
+- [ ] Saved-paper library with delete/export/import
+- [ ] Source text anchors for nodes
+- [ ] Extraction quality diagnostics
+- [ ] API tests for extraction and compare validation
 
 ## Disclaimer
 

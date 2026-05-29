@@ -29,8 +29,8 @@ export function PaperInput({ onPaperLoaded }: Props) {
       const fetchRes = await fetch(`/api/fetch-arxiv?id=${arxivId}`);
       if (!fetchRes.ok)
         throw new Error(`arXiv fetch failed: ${fetchRes.statusText}`);
-      const { text } = await fetchRes.json();
-      setStatus("Extracting knowledge graph...");
+      const { text, usedAbstractFallback } = await fetchRes.json();
+      setStatus(usedAbstractFallback ? "PDF text was noisy; extracting from abstract..." : "Extracting knowledge graph...");
       await extract(text, arxivId);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
@@ -52,8 +52,8 @@ export function PaperInput({ onPaperLoaded }: Props) {
         body: formData,
       });
       if (!parseRes.ok) throw new Error("PDF parsing failed");
-      const { text } = await parseRes.json();
-      setStatus("Extracting knowledge graph...");
+      const { text, usedAbstractFallback } = await parseRes.json();
+      setStatus(usedAbstractFallback ? "PDF text was noisy; extracting from abstract..." : "Extracting knowledge graph...");
       await extract(text);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");

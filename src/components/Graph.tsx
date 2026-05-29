@@ -21,6 +21,7 @@ export const Graph = forwardRef<GraphHandle, Props>(function Graph(
 ) {
   const svgRef = useRef<SVGSVGElement>(null)
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null)
+  const simulationRef = useRef<d3.Simulation<PaperNode, PaperEdge> | null>(null)
 
   useImperativeHandle(ref, () => ({
     zoomIn: () => {
@@ -208,17 +209,14 @@ export const Graph = forwardRef<GraphHandle, Props>(function Graph(
       node.attr('transform', (d) => `translate(${d.x ?? 0},${d.y ?? 0})`)
     })
 
-    // Store cleanup ref on the SVG element
-    ;(svgRef.current as any).__simulation = simulation
+    simulationRef.current = simulation
   }, [paper, activeFilters])
 
   useEffect(() => {
     buildGraph()
     return () => {
-      if (svgRef.current) {
-        const sim = (svgRef.current as any).__simulation
-        sim?.stop()
-      }
+      simulationRef.current?.stop()
+      simulationRef.current = null
     }
   }, [buildGraph])
 
